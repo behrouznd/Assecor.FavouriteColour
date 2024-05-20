@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Presentation.API</name>
+    </assembly>
+    <members>
+        <member name="M:Presentation.API.Controllers.PersonsController.GetPersons">
+            <summary>
+            Gets the list of all persons
+            </summary>
+            <returns>The persons list</returns>
+        </member>
+        <member name="M:Presentation.API.Controllers.PersonsController.GetPerson(System.Int32)">
+            <summary>
+            Find person by Id
+            </summary>
+            <param name="id"></param>
+            <returns>The person</returns>
+        </member>
+        <member name="M:Presentation.API.Controllers.PersonsController.GetPersonsByColor(System.String)">
+            <summary>
+            Search people by their favorite color
+            </summary>
+            <param name="color">valid values : blau, grün, violett, rot, gelb, türkis, weiß
+            </param>
+            <returns>The persons list</returns>
+            <response code="200">Returns the people's list</response>
+            <response code="400">If the param is invalid</response>
+        </member>
+        <member name="M:Presentation.API.Controllers.PersonsController.AddPerson(Shared.DataTransferObject.People.PersonDto)">
+            <summary>
+            Add a new person
+            </summary>
+            <param name="personDto"></param>
+            <returns>A newly created person</returns>
+            <response code="201">Returns the newly created item</response>
+        </member>
+    </members>
+</doc>
