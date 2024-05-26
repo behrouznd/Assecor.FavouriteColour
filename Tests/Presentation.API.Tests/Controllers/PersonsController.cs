@@ -40,7 +40,7 @@ public partial class PersonsController
     public class GetPerson : PersonsController
     {
         [Fact]
-        public void ShouldReturnPerson()
+        public void ShouldReturnPerson_WhenPersonFound()
         {
             //Arrange
             var personId = 1;
@@ -64,6 +64,20 @@ public partial class PersonsController
                 .NotBeNull()
                 .And.BeEquivalentTo(expectedPerson)
                 ;
+        }
+
+        [Fact]
+        public void ShouldReturnsNotFound_WhenPersonNotFound()
+        {
+            //Arrange
+            fixture.Mocks.SetupGetPersonById(null);
+            var sut = fixture.CreateSystemUnderTest();
+
+            // Act
+            var result = sut.GetPerson(99);
+
+            // Assert
+            Assert.IsType<NotFoundObjectResult>(result);
         }
     }
 
@@ -159,7 +173,7 @@ public partial class PersonsController
             var sut = fixture.CreateSystemUnderTest();
 
             // Act
-            var actionResult = sut.AddPerson(expectedResult);
+            var actionResult = sut.CreatePerson(expectedResult);
 
             // Assert
             var result = actionResult.Should()
