@@ -4,8 +4,8 @@ namespace Contracts.People;
 
 public interface IPersonRepository
 {
-    ICollection<Person> GetAll();
-    Person GetById(int id);
-    ICollection<Person> GetByColor(int color);
+    IReadOnlyCollection<Person> GetAll();
+    Person? GetById(int id);
+    IReadOnlyCollection<Person> GetByColor(int color);
     Person Create(Person entity);
 }

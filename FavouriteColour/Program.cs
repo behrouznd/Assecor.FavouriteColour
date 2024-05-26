@@ -11,7 +11,7 @@ builder.Services.ConfigurePersonService();
 builder.Services.ConfigurePersonRepositoryFactory();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(Service.MappingProfile));
 
 builder.Services.Configure<ResourceOptions>(builder.Configuration.GetSection("ResourceOptions"));
 builder.Services.ConfigureSwagger();

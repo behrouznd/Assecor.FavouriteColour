@@ -31,9 +31,9 @@ public class PersonService : IPersonService
         return _mapper.Map<IReadOnlyCollection<PersonDto>>(persons);
     }
 
-    public IReadOnlyCollection<PersonDto> GetPeopleByColor(int id)
+    public IReadOnlyCollection<PersonDto> GetPeopleByColor(int colorId)
     {
-        var persons = _personRepository.GetByColor(id);
+        var persons = _personRepository.GetByColor(colorId);
         return _mapper.Map<IReadOnlyCollection<PersonDto>>(persons);
     }
 

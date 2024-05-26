@@ -14,7 +14,7 @@ internal class PersonRepositoryCSVFile : IPersonRepository
         this.filePath = filePath;
     }
 
-    public ICollection<Person> GetAll()
+    public IReadOnlyCollection<Person> GetAll()
     {
         var persons = new List<Person>();
 
@@ -73,11 +73,16 @@ internal class PersonRepositoryCSVFile : IPersonRepository
         return rowCount;
     }
 
-    public Person GetById(int id)
+    public Person? GetById(int id)
     {
         var lines = File.ReadLines(filePath);
 
         var fields = lines?.ElementAtOrDefault(id - 1)?.Split(',');
+
+        if(fields is null)
+        {
+            return null;
+        }
 
         var person = new Person
         {
@@ -90,7 +95,7 @@ internal class PersonRepositoryCSVFile : IPersonRepository
         return person;
     }
 
-    public ICollection<Person> GetByColor(int color)
+    public IReadOnlyCollection<Person> GetByColor(int color)
     {
         var persons = new List<Person>();
 

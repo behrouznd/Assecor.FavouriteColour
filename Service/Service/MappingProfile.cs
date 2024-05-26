@@ -3,7 +3,7 @@ using Entities.Models;
 using Shared.DataTransferObject.People;
 using Shared.Enums;
 
-namespace FavouriteColour;
+namespace Service;
 
 public class MappingProfile : Profile
 {
@@ -17,7 +17,7 @@ public class MappingProfile : Profile
             .ForMember(des => des.color, opt => opt.MapFrom(src => Enum.GetName(typeof(Colour), src.Color)))
             .ReverseMap()
             .ForPath(s => s.Address, opt => opt.MapFrom(src => string.Concat(src.zipcode, " ", src.city)))
-            .ForPath(s => s.Color, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.color)? 0 : Enum.Parse<Colour>(src.color)))
+            .ForPath(s => s.Color, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.color) ? 0 : Enum.Parse<Colour>(src.color)))
             ;
     }
 
