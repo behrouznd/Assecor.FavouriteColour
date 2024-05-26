@@ -116,3 +116,65 @@ The data is read from a sample-input.csv file, which includes person details and
 | 5 | gelb |
 | 6 | türkis |
 | 7 | weiß |
+
+
+## Setup and Installation
+
+### Prerequisites
+- .NET SDK
+- Any required database (if using database option)
+
+### Running Locally
+1. Clone the project:
+   ```bash
+   git clone https://github.com/behrouznd/Assecor.FavouriteColour.git
+   ```
+2. Restore dependencies:
+   ```bash
+   dotnet restore
+   ```
+3. Update appsettings.json with the correct path for your CSV file:
+   ```json
+   "ResourceOptions": {
+      "IsDataBaseEnable": false,
+      "Path": "D:\\sample-input.csv"
+    }
+   ```
+4. Run the application:
+   ```bash
+    dotnet run
+   ```
+
+### Example Requests
+#### GET /persons
+```bash
+curl -X GET "https://yourapiurl/persons" -H "accept: application/json"
+```
+Example Response
+```json
+[
+    {
+        "id": 1,
+        "name": "Hans",
+        "lastname": "Müller",
+        "zipcode": "67742",
+        "city": "Lauterecken",
+        "color": "blau"
+    }
+]
+```
+#### POST /persons
+```bash
+curl -X POST "https://yourapiurl/persons" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"name\":\"John\",\"lastname\":\"Doe\",\"zipcode\":\"12345\",\"city\":\"SampleCity\",\"color\":\"rot\"}"
+```
+Example Response
+```json
+{
+    "id": 3,
+    "name": "John",
+    "lastname": "Doe",
+    "zipcode": "12345",
+    "city": "SampleCity",
+    "color": "rot"
+}
+```
