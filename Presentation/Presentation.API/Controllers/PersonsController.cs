@@ -2,6 +2,7 @@
 using Service.Contract.People;
 using Shared.DataTransferObject.People;
 using Shared.Enums;
+using System.Drawing;
 
 namespace Presentation.API.Controllers;
 
@@ -64,11 +65,17 @@ public class PersonsController : ControllerBase
     /// <param name="personDto"></param>
     /// <returns>A newly created person</returns>
     /// <response code="201">Returns the newly created item</response>
+	/// <response code="400">If the param is invalid</response>
     [HttpPost]
     [ProducesResponseType(201)]
+    [ProducesResponseType(400)]
     public IActionResult AddPerson([FromBody]PersonDto personDto)
     {
-        var person = _personService.AddPerson(personDto);
-        return CreatedAtRoute("PersonById", new { id = person.id }, person);
+        if (Enum.TryParse<Colour>(personDto.color, out Colour colour))
+        {
+            var person = _personService.AddPerson(personDto);
+            return CreatedAtRoute("PersonById", new { id = person.id }, person);
+        }
+        return BadRequest();
     }
 }

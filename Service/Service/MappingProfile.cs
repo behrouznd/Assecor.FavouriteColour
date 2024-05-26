@@ -17,7 +17,7 @@ public class MappingProfile : Profile
             .ForMember(des => des.color, opt => opt.MapFrom(src => Enum.GetName(typeof(Colour), src.Color)))
             .ReverseMap()
             .ForPath(s => s.Address, opt => opt.MapFrom(src => string.Concat(src.zipcode, " ", src.city)))
-            .ForPath(s => s.Color, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.color) ? 0 : Enum.Parse<Colour>(src.color)))
+            .ForPath(s => s.Color, opt => opt.MapFrom(src => GetColor(src.color)))
             ;
     }
 
@@ -37,5 +37,13 @@ public class MappingProfile : Profile
             return string.Empty;
         }
         return string.Join(' ', address.Split(" ")[1..]);
+    }
+
+    private int GetColor(string colorName)
+    {
+        return string.IsNullOrEmpty(colorName) ? 
+            0 : 
+            (Enum.TryParse<Colour>(colorName, out Colour colorVal) ? (int)colorVal : 0)
+            ;
     }
 }

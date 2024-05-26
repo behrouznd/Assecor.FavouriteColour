@@ -1,6 +1,7 @@
 ﻿using Contracts.People;
 using CsvHelper;
 using Entities.Models;
+using System.Drawing;
 using System.Globalization;
 
 namespace Repository.People;
@@ -16,32 +17,7 @@ internal class PersonRepositoryCSVFile : IPersonRepository
 
     public IReadOnlyCollection<Person> GetAll()
     {
-        var persons = new List<Person>();
-
-        using (var reader = new StreamReader(filePath))
-        {
-            string? line;
-            int id = 1;
-            while ((line = reader.ReadLine()) != null)
-            {
-                var fields = line.Split(',');
-
-                if (fields.Length > 3)
-                {
-                    var person = new Person
-                    {
-                        Id = id,
-                        Name = GetName(fields),
-                        LastName = GetLastName(fields),
-                        Address = GetAdress(fields),
-                        Color = int.TryParse(fields[^1]?.Trim(), out var color) ? color : 0
-                    };
-                    persons.Add(person);
-                }
-                id++;
-            }
-        }
-        return persons;
+        return ReadCSVFile(0);
     }
 
     Person IPersonRepository.Create(Person entity)
@@ -97,6 +73,11 @@ internal class PersonRepositoryCSVFile : IPersonRepository
 
     public IReadOnlyCollection<Person> GetByColor(int color)
     {
+        return ReadCSVFile(color);
+    }
+
+    private IReadOnlyCollection<Person> ReadCSVFile(int color)
+    {
         var persons = new List<Person>();
 
         using (var reader = new StreamReader(filePath))
@@ -109,7 +90,7 @@ internal class PersonRepositoryCSVFile : IPersonRepository
 
                 if (fields.Length > 3)
                 {
-                    if ((int.TryParse(fields[^1]?.Trim(), out var colorvalue) ? colorvalue : 0) == color)
+                    if (color == 0 || ((int.TryParse(fields[^1]?.Trim(), out var colorvalue) ? colorvalue : 0) == color))
                     {
                         var person = new Person
                         {
@@ -117,7 +98,7 @@ internal class PersonRepositoryCSVFile : IPersonRepository
                             Name = GetName(fields),
                             LastName = GetLastName(fields),
                             Address = GetAdress(fields),
-                            Color = color
+                            Color = color != 0 ? color : (int.TryParse(fields[^1]?.Trim(), out var colorVal) ? colorVal : 0 )
                         };
                         persons.Add(person);
                     }
