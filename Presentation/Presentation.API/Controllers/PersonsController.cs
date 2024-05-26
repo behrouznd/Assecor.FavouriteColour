@@ -32,8 +32,8 @@ public class PersonsController : ControllerBase
     /// <returns code="200">The person</returns>
 	/// <response code="404">If id does not exist</response>
     [HttpGet("{id}", Name = "PersonById")]
-    public IActionResult GetPerson(int id)
-    {
+    public IActionResult GetPerson(int id) 
+     { 
         var person = _personService.GetPersonById(id);
         if (person is null)
         {
@@ -76,7 +76,7 @@ public class PersonsController : ControllerBase
     public IActionResult CreatePerson([FromBody] PersonDto personDto)
     {
         if (!ModelState.IsValid)
-        {
+    {
             return BadRequest(ModelState);
         }
 
