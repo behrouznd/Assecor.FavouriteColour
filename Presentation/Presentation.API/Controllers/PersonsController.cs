@@ -2,7 +2,6 @@
 using Service.Contract.People;
 using Shared.DataTransferObject.People;
 using Shared.Enums;
-using System.Drawing;
 
 namespace Presentation.API.Controllers;
 
@@ -32,12 +31,14 @@ public class PersonsController : ControllerBase
     /// <param name="id"></param>
     /// <returns code="200">The person</returns>
 	/// <response code="404">If id does not exist</response>
-    [HttpGet("{id}" , Name = "PersonById")]
+    [HttpGet("{id}", Name = "PersonById")]
     public IActionResult GetPerson(int id) 
      { 
         var person = _personService.GetPersonById(id);
         if (person is null)
-            return NotFound();
+        {
+            return NotFound(new { Message = $"Person with ID {id} not found." });
+        }
         return Ok(person);
     }
 
@@ -54,7 +55,7 @@ public class PersonsController : ControllerBase
     [ProducesResponseType(400)]
     public IActionResult GetPersonsByColor(string? color)
     {
-        if(Enum.TryParse<Colour>(color, out Colour colour) && !Int32.TryParse(color , out int color_))
+        if (Enum.TryParse<Colour>(color, out Colour colour) && !Int32.TryParse(color, out int color_))
         {
             var person = _personService.GetPeopleByColor((int)colour);
             return Ok(person);
@@ -72,8 +73,13 @@ public class PersonsController : ControllerBase
     [HttpPost]
     [ProducesResponseType(201)]
     [ProducesResponseType(400)]
-    public IActionResult AddPerson([FromBody]PersonDto personDto)
+    public IActionResult CreatePerson([FromBody] PersonDto personDto)
     {
+        if (!ModelState.IsValid)
+    {
+            return BadRequest(ModelState);
+        }
+
         if (Enum.TryParse<Colour>(personDto.color, out Colour colour))
         {
             var person = _personService.AddPerson(personDto);

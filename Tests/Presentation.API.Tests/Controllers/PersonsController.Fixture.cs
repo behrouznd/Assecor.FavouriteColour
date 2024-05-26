@@ -28,7 +28,7 @@ public partial class PersonsController : IAsyncLifetime
                     .Returns(people);
             }
 
-            public void SetupGetPersonById(PersonDto person)
+            public void SetupGetPersonById(PersonDto? person)
             {
                 personService
                     .GetPersonById(Arg.Any<int>())

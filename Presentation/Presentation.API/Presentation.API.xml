@@ -28,7 +28,7 @@
             <response code="200">Returns the people's list</response>
             <response code="400">If the param is invalid</response>
         </member>
-        <member name="M:Presentation.API.Controllers.PersonsController.AddPerson(Shared.DataTransferObject.People.PersonDto)">
+        <member name="M:Presentation.API.Controllers.PersonsController.CreatePerson(Shared.DataTransferObject.People.PersonDto)">
             <summary>
             Add a new person
             </summary>
