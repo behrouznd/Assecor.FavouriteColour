@@ -13,7 +13,7 @@ public sealed class PersonRepositoryFactory : IPersonRepositoryFactory
     {
         var resourceOptions = options.Value;
 
-        if (resourceOptions.Enable)
+        if (resourceOptions.IsDataBaseEnable)
         {
             _personRepository = new PersonRepositoryDB(dataContext);
         }

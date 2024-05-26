@@ -2,6 +2,6 @@
 
 public class ResourceOptions
 {
-    public bool Enable { get; set; }
+    public bool IsDataBaseEnable { get; set; }
     public string Path { get; set; } = string.Empty;
 }
