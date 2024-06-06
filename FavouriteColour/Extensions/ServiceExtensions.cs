@@ -42,6 +42,8 @@ public static class ServiceExtensions
 
     public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<DataContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
+        services.AddDbContext<DataContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
+            b => b.MigrationsAssembly("FavouriteColour")
+            ));
     }
 }
