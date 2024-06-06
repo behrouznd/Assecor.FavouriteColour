@@ -1,7 +1,6 @@
 ﻿using Contracts.People;
 using CsvHelper;
 using Entities.Models;
-using System.Drawing;
 using System.Globalization;
 
 namespace Repository.People;
